@@ -5,17 +5,27 @@
 #include "fstream"
 #include "limits"
 
-// const auto MaxIgnore = std::numeric_limits<std::streamsize>::max();
+const unsigned int winSIZE = 7;
 
+// const auto MaxIgnore = std::numeric_limits<std::streamsize>::max();
 //Using Vector to check if the number is the same after new assigned
 bool isInVec(unsigned int key, std::vector<unsigned int> tempVec){
-    for(int i = 0; i < tempVec.size(); i++){
+    for(int i = 0; i < tempVec.size() ; i++){
         if(key == tempVec.at(i)){
             return true;
         }
     }
     return false;
 }
+
+bool isFound(unsigned userCh, unsigned winArr[winSIZE]){
+    if(userCh == winArr[0] || userCh == winArr[1]  || userCh == winArr[2]  || userCh == winArr[3]  || userCh == winArr[4]  || userCh == winArr[5] ){
+        
+        return true;
+        }
+        return false;
+    }
+
 
 
 //Bool check OutOfbound user input number that have to be large then 1 and not out of range
@@ -25,6 +35,9 @@ bool outOfBounds(unsigned int userInput, unsigned int range){
         }
     return false;
 }
+// bool isFound(unsigned int userInput, unsigned){
+
+// }
 
 // Testing
 // bool isNotNumber(unsigned int userInput){
@@ -39,10 +52,16 @@ bool outOfBounds(unsigned int userInput, unsigned int range){
 
 //Function to print out array of number
 void printArr(unsigned int arr[], unsigned int size) {
-    for(int i = 0; i < size; i++) {
+    for(int i = 0; i < size - 2; i++) {
         std::cout << arr[i] << " ";
     }
 }
+void printLuckyNum(unsigned int arr[], unsigned int size){
+    for(int i = 5; i < size; i++){
+        std::cout << arr[i] << " ";
+    }
+}
+
 
 //Function for printing out array of number to another file
 // void printArrToFile(unsigned int arr[], unsigned int size, std::ofstream &file){
@@ -61,6 +80,7 @@ int main() {
     unsigned int userNums[winSIZE];
     unsigned int mainBallRange = 50;
     unsigned int luckyBallRange = 12;
+    bool won = true;
 
     // std::ofstream outfile("winNums.txt");
 
@@ -89,16 +109,25 @@ int main() {
     while(winNums[winSIZE - 1] == winNums[winSIZE - 2]){
         winNums[winSIZE - 1] = rand() % 12 + 1;
     }
+    winTemp.push_back(winNums[winSIZE - 2]);
+    winTemp.push_back(winNums[winSIZE - 1]);
 
     std::cout<< "Winning Number: ";
+
     printArr(winNums, winSIZE);
     std::cout << "\n";
+
+    std::cout << "Lucky Number: ";
+
+    printLuckyNum(winNums, winSIZE);
+    std::cout << "\n";
+
     // printArrToFile(winNums, winSIZE, outfile);
 
 
     std::cout << "Please Enter 5 unique numbers ranging from 1-50 and 2 lucky numbers ranging from 1-12" << "\n";
     //Loop through winSIZE of 5 then get userInput for the first 5 number 
-    for(int i = 0; i < winSIZE; i++){
+    for(int i = 0; i < winSIZE - 2; i++){
         std::cout << "Number " << i + 1 << ": ";
         std::cin >> userNums[i];
 
@@ -119,5 +148,33 @@ int main() {
        //Push userInput to vector
         temp.push_back(userNums[i]);
     }
-    printArr(userNums, winSIZE);
+    for(int i = 5; i < winSIZE; i++){
+        std::cout << "Lucky Number" << i + 1 << ": ";
+        std::cin >> userNums[i];
+        while(isInVec(userNums[i], temp) || outOfBounds(userNums[i], luckyBallRange)){
+            std::cout<< "please do not enter duplicate or out of range number" << "\n";
+            std::cout<< "Please re-enter lucky number"<<i + 1 << ": ";
+            std::cin>>userNums[i];
+        }
+        temp.push_back(userNums[i]);
+    }
+
+    for(int i = 0; i < winSIZE; i++){
+        if(!isInVec(userNums[i], winTemp)){
+            std::cout << "Better luck next time\n";
+
+            std::cout<< "Your numbers: ";
+            printArr(userNums, winSIZE);
+            std::cout << "\n";
+
+            std::cout << "Your lucky numbers: ";
+            printLuckyNum(userNums, winSIZE);
+
+            won = false;
+            break;
+        }
+    } 
+    if(won){
+            std::cout<< "You win\n";
+    }
 }
