@@ -66,6 +66,7 @@ int main() {
 
     //Initialize Vector to store number
     std::vector<unsigned int> temp;
+    std::vector<unsigned int> winTemp;
 
     
     //Seed random number to time so that the number is randomized
@@ -79,7 +80,7 @@ int main() {
             winNums[i] = rand() % 50 + 1;
         }
         //then push the number into vector
-        temp.push_back(winNums[i]);
+        winTemp.push_back(winNums[i]);
     }
     //assign random lucky number ranging from 1-12
     winNums[winSIZE - 2] = rand() % 12 + 1;
@@ -89,11 +90,11 @@ int main() {
         winNums[winSIZE - 1] = rand() % 12 + 1;
     }
 
-
+    std::cout<< "Winning Number: ";
+    printArr(winNums, winSIZE);
+    std::cout << "\n";
     // printArrToFile(winNums, winSIZE, outfile);
 
-    //Clear vector so we can reuse for UserInput
-    temp.clear();
 
     std::cout << "Please Enter 5 unique numbers ranging from 1-50 and 2 lucky numbers ranging from 1-12" << "\n";
     //Loop through winSIZE of 5 then get userInput for the first 5 number 
