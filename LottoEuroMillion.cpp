@@ -18,13 +18,13 @@ bool isInVec(unsigned int key, std::vector<unsigned int> tempVec){
     return false;
 }
 
-bool isFound(unsigned userCh, unsigned winArr[winSIZE]){
-    if(userCh == winArr[0] || userCh == winArr[1]  || userCh == winArr[2]  || userCh == winArr[3]  || userCh == winArr[4]  || userCh == winArr[5] ){
+// bool isFound(unsigned userCh, unsigned winArr[winSIZE]){
+//     if(userCh == winArr[0] || userCh == winArr[1]  || userCh == winArr[2]  || userCh == winArr[3]  || userCh == winArr[4]  || userCh == winArr[5] ){
         
-        return true;
-        }
-        return false;
-    }
+//         return true;
+//         }
+//         return false;
+//     }
 
 
 
@@ -92,11 +92,14 @@ int main() {
     //Seed random number to time so that the number is randomized
     std::srand((unsigned int) (std::time(nullptr)));
 
+
+    /*GENERATE WINNING NUM*/
+
     //Loop through winSIZE of 5 then assign random number ranging from 1-50
     for(int i = 0; i < winSIZE - 2 ; i++) {
         winNums[i] = rand() % 50 + 1;
         //checking if number is in vector or not if it is, assign new random number
-        while(isInVec(winNums[i], temp)){
+        while(isInVec(winNums[i], winTemp)){
             winNums[i] = rand() % 50 + 1;
         }
         //then push the number into vector
@@ -126,19 +129,24 @@ int main() {
 
 
     std::cout << "Please Enter 5 unique numbers ranging from 1-50 and 2 lucky numbers ranging from 1-12" << "\n";
+
+    /*USER INPUT */
+
     //Loop through winSIZE of 5 then get userInput for the first 5 number 
     for(int i = 0; i < winSIZE - 2; i++){
         std::cout << "Number " << i + 1 << ": ";
         std::cin >> userNums[i];
 
         //when winSIZE is 6 and 7 it is a lucky number so we change range to 1-12
+
         if(i == winSIZE - 2){
             mainBallRange = luckyBallRange;
         }
         if(i == winSIZE - 1){
             mainBallRange = luckyBallRange; 
         }
-        //while loop to check if userInput number is the same or out of bound then let user re-input the number
+
+        // //while loop to check if userInput number is the same or out of bound then let user re-input the number
         while(isInVec(userNums[i], temp) || outOfBounds(userNums[i], mainBallRange)){
             std::cout<< "please do not enter duplicate or out of range number" << "\n";
             std::cout<< "please re-enter choice " << i + 1 <<": ";
@@ -148,6 +156,7 @@ int main() {
        //Push userInput to vector
         temp.push_back(userNums[i]);
     }
+
     for(int i = 5; i < winSIZE; i++){
         std::cout << "Lucky Number" << i + 1 << ": ";
         std::cin >> userNums[i];
