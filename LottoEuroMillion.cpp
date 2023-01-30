@@ -5,7 +5,6 @@
 #include "limits"
 #include "algorithm"
 
-const unsigned int winSIZE = 7;
 
 // const auto MaxIgnore = std::numeric_limits<std::streamsize>::max();
 //Using Vector to check if the number is the same after new assigned
