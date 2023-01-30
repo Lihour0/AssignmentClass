@@ -6,7 +6,6 @@
 #include "algorithm"
 
 
-// const auto MaxIgnore = std::numeric_limits<std::streamsize>::max();
 //Using Vector to check if the number is the same after new assigned
 bool isInVec(unsigned int key, std::vector<unsigned int> tempVec){
     for(int i = 0; i < tempVec.size() ; i++){
@@ -36,6 +35,10 @@ void printLuckyNum(unsigned int arr[], unsigned int size){
     for(int i = 5; i < size; i++){
         std::cout << arr[i] << " ";
     }
+}
+void inputNumOnly(){
+    std::cin.clear();
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 }
 
 
@@ -68,6 +71,9 @@ int main() {
     /*GENERATE WINNING NUM*/
 
     //Loop through winSIZE of 5 then assign random number ranging from 1-50
+    
+    int start = clock();
+    
     for(int i = 0; i < winSIZE - 2 ; i++) {
         winNums[i] = rand() % 50 + 1;
         //checking if number is in vector or not if it is, assign new random number
@@ -87,6 +93,10 @@ int main() {
         
         luckyWinTemp.push_back(winNums[i]);
     }
+
+    int end = clock();
+
+    std:: cout<< "it took" << end - start << "ticks or" << ((float) end - start)/CLOCKS_PER_SEC << "seconds.\n";
 
     std::cout<< "Winning Number: ";
 
@@ -114,8 +124,7 @@ int main() {
         while(isInVec(userNums[i], temp) || outOfBounds(userNums[i], mainBallRange)){
             std::cout<< "please do not enter duplicate or out of range number" << "\n";
             std::cout<< "please re-enter choice " << i + 1 <<": ";
-            std::cin.clear();
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            inputNumOnly();
             std::cin>>userNums[i];
         }
        
@@ -130,8 +139,7 @@ int main() {
         while(isInVec(userNums[i], luckyTemp) || outOfBounds(userNums[i], luckyBallRange)){
             std::cout<< "please do not enter duplicate or out of range number" << "\n";
             std::cout<< "Please re-enter lucky number"<<i + 1 << ": ";
-            std::cin.clear();
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            inputNumOnly();
             std::cin>>userNums[i];
         }
         luckyTemp.push_back(userNums[i]);
@@ -152,5 +160,43 @@ int main() {
     std::cout<< "Matched Lucky Number: ";
     std::cout<< luckyNum.size() << "\n";
 
-
+    if(mainNum.size() == 2 && luckyNum.size() == 0){
+        std::cout << "You win \u20AC2.10";
+    }
+    if(mainNum.size() == 3 && luckyNum.size() == 0){
+        std::cout << "You win \u20AC4.10";
+    }
+    if(mainNum.size() == 4 && luckyNum.size() == 0){
+        std::cout << "You win \u20AC13.20";
+    }
+     if(mainNum.size() == 5 && luckyNum.size() == 0){
+        std::cout << "You win \u20AC5,042.10";
+    }
+     if(mainNum.size() == 2 && luckyNum.size() == 1){
+        std::cout << "You win \u20AC4.00";
+    }
+    if(mainNum.size() == 1 && luckyNum.size() == 2){
+        std::cout << "You win \u20AC6.40";
+    }
+    if(mainNum.size() == 2 && luckyNum.size() == 2){
+        std::cout << "You win \u20AC12.90";
+    }
+    if(mainNum.size() == 3 && luckyNum.size() == 1){
+        std::cout << "You win \u20AC7.10";
+    }
+    if(mainNum.size() == 3 && luckyNum.size() == 2){
+        std::cout << "You win \u20AC48.60";
+    }
+    if(mainNum.size() == 4 && luckyNum.size() == 1){
+        std::cout << "You win \u20AC63.00";
+    }
+    if(mainNum.size() == 4 && luckyNum.size() == 2){
+        std::cout << "You win \u20AC1,160.80";
+    }
+    if(mainNum.size() == 5 && luckyNum.size() == 1){
+        std::cout << "You win \u20AC91,688.80";
+    }
+    if(mainNum.size() == 5 && luckyNum.size() == 2){
+        std::cout << "You hit the Jackpot";
+    }
 }
