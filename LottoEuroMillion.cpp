@@ -2,10 +2,8 @@
 #include "ctime"
 #include "cstdlib"
 #include "vector"
-#include "fstream"
 #include "limits"
 #include "algorithm"
-#include "iterator"
 
 const unsigned int winSIZE = 7;
 
@@ -20,20 +18,6 @@ bool isInVec(unsigned int key, std::vector<unsigned int> tempVec){
     return false;
 }
 
-// bool checkWin(std::vector<unsigned int> a, std::vector<unsigned int> b){
-//     if(std::find(a.))
-
-// }
-
-// bool isFound(unsigned userCh, unsigned winArr[winSIZE]){
-//     if(userCh == winArr[0] || userCh == winArr[1]  || userCh == winArr[2]  || userCh == winArr[3]  || userCh == winArr[4]  || userCh == winArr[5] ){
-        
-//         return true;
-//         }
-//         return false;
-//     }
-
-
 
 //Bool check OutOfbound user input number that have to be large then 1 and not out of range
 bool outOfBounds(unsigned int userInput, unsigned int range){
@@ -42,20 +26,6 @@ bool outOfBounds(unsigned int userInput, unsigned int range){
         }
     return false;
 }
-// bool isFound(unsigned int userInput, unsigned){
-
-// }
-
-// Testing
-// bool isNotNumber(unsigned int userInput){
-//     while(!(std::cin >> userInput)){
-//         std::cin.clear();
-//         std::cin.ignore(MaxIgnore, '\n');
-//         std::cout << "invalid";
-//         return true;
-//     }
-//     return false;
-// }
 
 //Function to print out array of number
 void printArr(unsigned int arr[], unsigned int size) {
@@ -68,13 +38,6 @@ void printLuckyNum(unsigned int arr[], unsigned int size){
         std::cout << arr[i] << " ";
     }
 }
-
-//Function for printing out array of number to another file
-// void printArrToFile(unsigned int arr[], unsigned int size, std::ofstream &file){
-//     for(int i = 0; i < size; i++){
-//         file << arr[i] << " ";
-//     }
-// }
 
 
 int main() {
