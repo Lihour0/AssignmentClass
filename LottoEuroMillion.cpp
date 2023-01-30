@@ -1,9 +1,10 @@
-#include "iostream"
-#include "ctime"
-#include "cstdlib"
-#include "vector"
-#include "limits"
-#include "algorithm"
+#include <iostream>
+#include <ctime>
+#include <cstdlib>
+#include <vector>
+#include <limits>
+#include <algorithm>
+#include <iomanip>
 
 
 //Using Vector to check if the number is the same after new assigned
@@ -31,11 +32,13 @@ void printArr(unsigned int arr[], unsigned int size) {
         std::cout << arr[i] << " ";
     }
 }
+//Function to print out last 2 element of array(lucky number)
 void printLuckyNum(unsigned int arr[], unsigned int size){
     for(int i = 5; i < size; i++){
         std::cout << arr[i] << " ";
     }
 }
+//cin only number if not number clear and ignore
 void inputNumOnly(){
     std::cin.clear();
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -51,9 +54,20 @@ int main() {
     unsigned int userNums[winSIZE];
     const unsigned int mainBallRange = 50;
     const unsigned int luckyBallRange = 12;
-    bool won = true;
+    const double main2 = 2.10;
+    const double main2luck1 = 4.00;
+    const double main1luck2 = 6.40;
+    const double main3 = 4.10;
+    const double main3luck1 = 7.10;
+    const double main2luck2 = 12.90;
+    const double main4 = 13.20;
+    const double main3luck2 = 48.60;
+    const double main4luck1 = 63.00;
+    const double main4luck2 = 1160.80;
+    const double main5 = 5042.10; 
+    const double main5luck1 = 91688.80;
+    const double main5luck2 = 230000000.00;
 
-    // std::ofstream outfile("winNums.txt");
 
     //Initialize Vector to store number
     std::vector<unsigned int> temp;
@@ -72,31 +86,25 @@ int main() {
 
     //Loop through winSIZE of 5 then assign random number ranging from 1-50
     
-    int start = clock();
-    
     for(int i = 0; i < winSIZE - 2 ; i++) {
-        winNums[i] = rand() % 50 + 1;
+        winNums[i] = rand() % mainBallRange + 1;
         //checking if number is in vector or not if it is, assign new random number
         while(isInVec(winNums[i], winTemp)){
-            winNums[i] = rand() % 50 + 1;
+            winNums[i] = rand() % mainBallRange + 1;
         }
         //then push the number into vector
         winTemp.push_back(winNums[i]);
     }
     //assign random lucky number ranging from 1-12
     for(int i = 5; i < winSIZE; i++){
-        winNums[i] = rand() % 12 + 1;
+        winNums[i] = rand() % luckyBallRange + 1;
         
         while(isInVec(winNums[i], luckyWinTemp)){
-            winNums[i] = rand() % 12 + 1;
+            winNums[i] = rand() % luckyBallRange + 1;
         }
         
         luckyWinTemp.push_back(winNums[i]);
     }
-
-    int end = clock();
-
-    std:: cout<< "it took" << end - start << "ticks or" << ((float) end - start)/CLOCKS_PER_SEC << "seconds.\n";
 
     std::cout<< "Winning Number: ";
 
@@ -144,6 +152,11 @@ int main() {
         }
         luckyTemp.push_back(userNums[i]);
     }
+
+    std::sort(winTemp.begin(), winTemp.end());
+    std::sort(temp.begin(), temp.end());
+    std::sort(luckyWinTemp.begin(), luckyWinTemp.end());
+    std::sort(luckyTemp.begin(), luckyTemp.end());
     
     std::set_intersection(
                             winTemp.begin(), winTemp.end(), 
@@ -160,43 +173,45 @@ int main() {
     std::cout<< "Matched Lucky Number: ";
     std::cout<< luckyNum.size() << "\n";
 
+    std::cout<< std::setprecision(2);
+
     if(mainNum.size() == 2 && luckyNum.size() == 0){
-        std::cout << "You win \u20AC2.10";
+        std::cout << "You win \u20AC"<< main2;
     }
     if(mainNum.size() == 3 && luckyNum.size() == 0){
-        std::cout << "You win \u20AC4.10";
+        std::cout << "You win \u20AC"<< main3;
     }
     if(mainNum.size() == 4 && luckyNum.size() == 0){
-        std::cout << "You win \u20AC13.20";
+        std::cout << "You win \u20AC"<< main4;
     }
      if(mainNum.size() == 5 && luckyNum.size() == 0){
-        std::cout << "You win \u20AC5,042.10";
+        std::cout << "You win \u20AC"<< main5;
     }
-     if(mainNum.size() == 2 && luckyNum.size() == 1){
-        std::cout << "You win \u20AC4.00";
+    if(mainNum.size() == 2 && luckyNum.size() == 1){
+        std::cout << "You win \u20AC"<< main2luck1;
     }
     if(mainNum.size() == 1 && luckyNum.size() == 2){
-        std::cout << "You win \u20AC6.40";
+        std::cout << "You win \u20AC"<< main1luck2;
     }
     if(mainNum.size() == 2 && luckyNum.size() == 2){
-        std::cout << "You win \u20AC12.90";
+        std::cout << "You win \u20AC"<< main2luck2;
     }
     if(mainNum.size() == 3 && luckyNum.size() == 1){
-        std::cout << "You win \u20AC7.10";
+        std::cout << "You win \u20AC"<< main3luck1;
     }
     if(mainNum.size() == 3 && luckyNum.size() == 2){
-        std::cout << "You win \u20AC48.60";
+        std::cout << "You win \u20AC"<< main3luck2;
     }
     if(mainNum.size() == 4 && luckyNum.size() == 1){
-        std::cout << "You win \u20AC63.00";
+        std::cout << "You win \u20AC"<< main4luck1;
     }
     if(mainNum.size() == 4 && luckyNum.size() == 2){
-        std::cout << "You win \u20AC1,160.80";
+        std::cout << "You win \u20AC"<< main4luck2;
     }
     if(mainNum.size() == 5 && luckyNum.size() == 1){
-        std::cout << "You win \u20AC91,688.80";
+        std::cout << "You win \u20AC"<< main5luck1;
     }
     if(mainNum.size() == 5 && luckyNum.size() == 2){
-        std::cout << "You hit the Jackpot";
+        std::cout << std::fixed <<"You hit the Jackpot of \u20AC"<< main5luck2;
     }
 }
