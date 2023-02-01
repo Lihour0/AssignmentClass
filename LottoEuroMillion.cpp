@@ -173,45 +173,48 @@ int main() {
     std::cout<< "Matched Lucky Number: ";
     std::cout<< luckyNum.size() << "\n";
 
-    std::cout<< std::setprecision(2);
+    std::cout<< std::setprecision(2) << std::fixed;
 
-    if(mainNum.size() == 2 && luckyNum.size() == 0){
+    if(mainNum.size() == 2 ){
         std::cout << "You win \u20AC"<< main2;
     }
-    if(mainNum.size() == 3 && luckyNum.size() == 0){
+    else if(mainNum.size() == 3 ){
         std::cout << "You win \u20AC"<< main3;
     }
-    if(mainNum.size() == 4 && luckyNum.size() == 0){
+    else if(mainNum.size() == 4 ){
         std::cout << "You win \u20AC"<< main4;
     }
-     if(mainNum.size() == 5 && luckyNum.size() == 0){
+    else if(mainNum.size() == 5 ){
         std::cout << "You win \u20AC"<< main5;
     }
-    if(mainNum.size() == 2 && luckyNum.size() == 1){
+    else if(mainNum.size() == 2 && luckyNum.size() == 1){
         std::cout << "You win \u20AC"<< main2luck1;
     }
-    if(mainNum.size() == 1 && luckyNum.size() == 2){
+    else if(mainNum.size() == 1 && luckyNum.size() == 2){
         std::cout << "You win \u20AC"<< main1luck2;
     }
-    if(mainNum.size() == 2 && luckyNum.size() == 2){
+    else if(mainNum.size() == 2 && luckyNum.size() == 2){
         std::cout << "You win \u20AC"<< main2luck2;
     }
-    if(mainNum.size() == 3 && luckyNum.size() == 1){
+    else if(mainNum.size() == 3 && luckyNum.size() == 1){
         std::cout << "You win \u20AC"<< main3luck1;
     }
-    if(mainNum.size() == 3 && luckyNum.size() == 2){
+    else if(mainNum.size() == 3 && luckyNum.size() == 2){
         std::cout << "You win \u20AC"<< main3luck2;
     }
-    if(mainNum.size() == 4 && luckyNum.size() == 1){
+    else if(mainNum.size() == 4 && luckyNum.size() == 1){
         std::cout << "You win \u20AC"<< main4luck1;
     }
-    if(mainNum.size() == 4 && luckyNum.size() == 2){
+    else if(mainNum.size() == 4 && luckyNum.size() == 2){
         std::cout << "You win \u20AC"<< main4luck2;
     }
-    if(mainNum.size() == 5 && luckyNum.size() == 1){
+    else if(mainNum.size() == 5 && luckyNum.size() == 1){
         std::cout << "You win \u20AC"<< main5luck1;
     }
-    if(mainNum.size() == 5 && luckyNum.size() == 2){
+    else if(mainNum.size() == 5 && luckyNum.size() == 2){
         std::cout << std::fixed <<"You hit the Jackpot of \u20AC"<< main5luck2;
+    }
+    else{
+        std::cout << "Error";
     }
 }
