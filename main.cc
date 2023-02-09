@@ -1,15 +1,17 @@
 #include <iostream>
-#include <ctime>
-#include <cstdlib>
 #include <vector>
 #include <limits>
 #include <algorithm>
 #include <iomanip>
+#include "Lotto.h"
 
 
-//Using Vector to check if the number is the same after new assigned
-bool isInVec(unsigned int key, std::vector<unsigned int> tempVec){
-    for(int i = 0; i < tempVec.size() ; i++){
+
+//bool check array to check if the number is inside vector when pushed if it is the same
+//assign new number 
+template<typename T>
+bool isInVec(T key, std::vector<T> tempVec){
+    for(int i = 0; i < tempVec.size(); i++){
         if(key == tempVec.at(i)){
             return true;
         }
@@ -18,8 +20,9 @@ bool isInVec(unsigned int key, std::vector<unsigned int> tempVec){
 }
 
 
-//Bool check OutOfbound user input number that have to be large then 1 and not out of range
-bool outOfBounds(unsigned int userInput, unsigned int range){
+//Bool check OutOfbound user input number that have to be larger then 1 and not out of range
+template<typename T>
+bool outOfBounds(T userInput, T range){
     if(userInput < 1 || userInput > range){
         return true;
         }
@@ -27,17 +30,13 @@ bool outOfBounds(unsigned int userInput, unsigned int range){
 }
 
 //Function to print out array of number
-void printArr(unsigned int arr[], unsigned int size) {
+template<typename T>
+void printArr(T arr[], T size) {
     for(int i = 0; i < size - 2; i++) {
         std::cout << arr[i] << " ";
     }
 }
-//Function to print out last 2 element of array(lucky number)
-void printLuckyNum(unsigned int arr[], unsigned int size){
-    for(int i = 5; i < size; i++){
-        std::cout << arr[i] << " ";
-    }
-}
+
 //cin only number if not number clear and ignore
 void inputNumOnly(){
     std::cin.clear();
@@ -45,15 +44,17 @@ void inputNumOnly(){
 }
 
 
+
 int main() {
    
 //Initialize 
-    const unsigned int winSIZE = 7;
-    const unsigned int luckySIZE = 2;
-    unsigned int winNums[winSIZE];
-    unsigned int userNums[winSIZE];
-    const unsigned int mainBallRange = 50;
-    const unsigned int luckyBallRange = 12;
+    const int winSIZE = 7;
+    const int mainSIZE = 5;
+    const int luckySIZE = 2;
+    int winNums[winSIZE];
+    int userNums[winSIZE];
+    const int mainBallRange = 50;
+    const int luckyBallRange = 12;
     const double main2 = 2.10;
     const double main2luck1 = 4.00;
     const double main1luck2 = 6.40;
@@ -70,67 +71,68 @@ int main() {
 
 
     //Initialize Vector to store number
-    std::vector<unsigned int> temp;
-    std::vector<unsigned int> luckyTemp;
-    std::vector<unsigned int> winTemp;
-    std::vector<unsigned int> luckyWinTemp;
-    std::vector<unsigned int> mainNum;
-    std::vector<unsigned int> luckyNum;
+    std::vector<int> temp;
+    std::vector<int> luckyTemp;
+
+    // std::vector<int> winTemp;
+    // std::vector<int> luckyWinTemp;
+    // std::vector<unsigned int> mainNum;
+    // std::vector<unsigned int> luckyNum;
 
     
     //Seed random number to time so that the number is randomized
-    std::srand((unsigned int) (std::time(nullptr)));
+    // std::srand((unsigned int) (std::time(nullptr)));
 
 
     /*GENERATE WINNING NUM*/
 
+    //For loop method assign random random then push to vector
+
     //Loop through winSIZE of 5 then assign random number ranging from 1-50
-    
-    for(int i = 0; i < winSIZE - 2 ; i++) {
-        winNums[i] = rand() % mainBallRange + 1;
-        //checking if number is in vector or not if it is, assign new random number
-        while(isInVec(winNums[i], winTemp)){
-            winNums[i] = rand() % mainBallRange + 1;
-        }
-        //then push the number into vector
-        winTemp.push_back(winNums[i]);
-    }
-    //assign random lucky number ranging from 1-12
-    for(int i = 5; i < winSIZE; i++){
-        winNums[i] = rand() % luckyBallRange + 1;
-        
-        while(isInVec(winNums[i], luckyWinTemp)){
-            winNums[i] = rand() % luckyBallRange + 1;
-        }
-        
-        luckyWinTemp.push_back(winNums[i]);
-    }
 
-    std::cout<< "Winning Number: ";
+    // for(int i = 0; i < winSIZE - 2 ; i++) {
+    //     winNums[i] = rand() % mainBallRange + 1;
+    //     //checking if number is in vector or not if it is, assign new random number
+    //     while(isInVec(winNums[i], winTemp)){
+    //         winNums[i] = rand() % mainBallRange + 1;
+    //     }
+    //     //then push the number into vector
+    //     winTemp.push_back(winNums[i]);
+    // }
+    // //assign random lucky number ranging from 1-12
+    // for(int i = 5; i < winSIZE; i++){
+    //     winNums[i] = rand() % luckyBallRange + 1;
+        
+    //     while(isInVec(winNums[i], luckyWinTemp)){
+    //         winNums[i] = rand() % luckyBallRange + 1;
+    //     }
+        
+    //     luckyWinTemp.push_back(winNums[i]);
+    // }
 
-    printArr(winNums, winSIZE);
+    //Using Class Lotto to Generate random number using random engine and vector
+
+    Lotto winMainNum(mainSIZE,mainBallRange);
+    Lotto winLuckyNum(luckySIZE,luckyBallRange);
+
+    std::cout<< "Winning Number: "<< winMainNum;
     std::cout << "\n";
 
-    std::cout << "Lucky Number: ";
-
-    printLuckyNum(winNums, winSIZE);
+    std::cout << "Lucky Number: "<<winLuckyNum;
     std::cout << "\n";
-
-    // printArrToFile(winNums, winSIZE, outfile);
-
-
-    std::cout << "Please Enter 5 unique numbers ranging from 1-50 and 2 lucky numbers ranging from 1-12" << "\n";
 
     /*USER INPUT */
 
+    std::cout << "Please Enter 5 unique numbers ranging from 1-50 and 2 lucky numbers ranging from 1-12" << "\n";
+
     //Loop through winSIZE of 5 then get userInput for the first 5 number 
-    for(int i = 0; i < winSIZE - 2; i++){
+    for(int i = 0; i < winSIZE - luckySIZE; i++){
         std::cout << "Number " << i + 1 << ": ";
         std::cin >> userNums[i];
 
         // //while loop to check if userInput number is the same or out of bound then let user re-input the number
         while(isInVec(userNums[i], temp) || outOfBounds(userNums[i], mainBallRange)){
-            std::cout<< "please do not enter duplicate or out of range number" << "\n";
+            std::cout<< "please enter only number do not enter duplicate or out of range number" << "\n";
             std::cout<< "please re-enter choice " << i + 1 <<": ";
             inputNumOnly();
             std::cin>>userNums[i];
@@ -141,11 +143,11 @@ int main() {
     }
 
     //user lucky number input
-    for(int i = 5; i < winSIZE; i++){
+    for(int i = mainSIZE; i < winSIZE; i++){
         std::cout << "Lucky Number" << i + 1 << ": ";
         std::cin >> userNums[i];
         while(isInVec(userNums[i], luckyTemp) || outOfBounds(userNums[i], luckyBallRange)){
-            std::cout<< "please do not enter duplicate or out of range number" << "\n";
+            std::cout<< "please enter only number do not enter duplicate, out of range number " << "\n";
             std::cout<< "Please re-enter lucky number"<<i + 1 << ": ";
             inputNumOnly();
             std::cin>>userNums[i];
@@ -153,41 +155,24 @@ int main() {
         luckyTemp.push_back(userNums[i]);
     }
 
-    std::sort(winTemp.begin(), winTemp.end());
+    //sort the vector before intersect
     std::sort(temp.begin(), temp.end());
-    std::sort(luckyWinTemp.begin(), luckyWinTemp.end());
     std::sort(luckyTemp.begin(), luckyTemp.end());
+
+    const auto mainNum{winMainNum & temp};
+    const auto luckyNum{winLuckyNum & luckyTemp};
     
-    std::set_intersection(
-                            winTemp.begin(), winTemp.end(), 
-                            temp.begin(), temp.end(), 
-                            std::back_inserter(mainNum));
-    std::set_intersection(
-                            luckyWinTemp.begin(), luckyWinTemp.end(), 
-                            luckyTemp.begin(), luckyTemp.end(), 
-                            std::back_inserter(luckyNum));
-
-
     std::cout<< "Matched Main Number: ";
     std::cout<< mainNum.size() << "\n";
     std::cout<< "Matched Lucky Number: ";
     std::cout<< luckyNum.size() << "\n";
 
+
     std::cout<< std::setprecision(2) << std::fixed;
 
-    if(mainNum.size() == 2 ){
-        std::cout << "You win \u20AC"<< main2;
-    }
-    else if(mainNum.size() == 3 ){
-        std::cout << "You win \u20AC"<< main3;
-    }
-    else if(mainNum.size() == 4 ){
-        std::cout << "You win \u20AC"<< main4;
-    }
-    else if(mainNum.size() == 5 ){
-        std::cout << "You win \u20AC"<< main5;
-    }
-    else if(mainNum.size() == 2 && luckyNum.size() == 1){
+//prize breakdown(checker)
+   
+    if(mainNum.size() == 2 && luckyNum.size() == 1){
         std::cout << "You win \u20AC"<< main2luck1;
     }
     else if(mainNum.size() == 1 && luckyNum.size() == 2){
@@ -214,7 +199,21 @@ int main() {
     else if(mainNum.size() == 5 && luckyNum.size() == 2){
         std::cout << std::fixed <<"You hit the Jackpot of \u20AC"<< main5luck2;
     }
-    else{
-        std::cout << "Error";
+    else if(mainNum.size() == 2 ){
+        std::cout << "You win \u20AC"<< main2;
     }
+    else if(mainNum.size() == 3 ){
+        std::cout << "You win \u20AC"<< main3;
+    }
+    else if(mainNum.size() == 4 ){
+        std::cout << "You win \u20AC"<< main4;
+    }
+    else if(mainNum.size() == 5 ){
+        std::cout << "You win \u20AC"<< main5;
+    }
+    else{
+        std::cout << "You Lost";
+        return 0;
+    }
+   
 }
